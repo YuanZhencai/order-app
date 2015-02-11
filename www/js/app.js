@@ -13,6 +13,23 @@ angular.module('order', ['ionic', 'order.controllers', 'order.services'])
             }
         });
     })
+    .run(function ($rootScope, $window, $location) {
+        $rootScope.$on("$locationChangeStart", function (event, next, current) {
+            console.info('$locationChangeStart--:');
+
+            var loginInfo = localStorage.getItem("user");
+
+            if (!loginInfo) {
+
+                $location.path('/login');
+                console.log('未登入--: ' + $rootScope.originalUrl);
+                return;
+            } else {
+                //已登录
+                console.log('已登入--: ' + $rootScope.originalUrl);
+            }
+        });
+    })
 
     .config(function ($stateProvider, $urlRouterProvider) {
 
@@ -21,6 +38,11 @@ angular.module('order', ['ionic', 'order.controllers', 'order.services'])
         // Set up the various states which the app can be in.
         // Each state's controller can be found in controllers.js
         $stateProvider
+            .state('login', {
+                url: "/login",
+                templateUrl: 'templates/login.html',
+                controller: 'LoginCtrl'
+            })
 
             // setup an abstract state for the tabs directive
             .state('tab', {
@@ -99,8 +121,8 @@ angular.module('order', ['ionic', 'order.controllers', 'order.services'])
                 }
             })
             .state('tab.menu-detail', {
-                url:'/menu/:menuId',
-                views:{
+                url: '/menu/:menuId',
+                views: {
                     'tab-menus': {
                         templateUrl: 'templates/menu-detail.html',
                         controller: 'MenuCtrl'

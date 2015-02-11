@@ -132,4 +132,28 @@ angular.module('order.services', [])
         }
     })
 
+    .factory('LoginService', function ($http, $q, $log) {
+        var headers = {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        };
+        return {
+            login: function (user) {
+                var deferred;
+                console.debug("MenuService");
+                deferred = $q.defer();
+                $http.post("http://192.168.0.14:9000/api/login", user).success(function (data, status, headers) {
+                    console.info("Successfully login - status " + status);
+                    return deferred.resolve(data);
+                }, function (data, status, headers) {
+                    console.error("Failed to login - status " + status);
+                    return deferred.reject(data);
+                });
+                return deferred.promise;
+            }
+
+
+        }
+    })
+
 ;

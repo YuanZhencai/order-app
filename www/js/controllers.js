@@ -18,14 +18,21 @@ angular.module('order.controllers', [])
         $scope.friends = Friends.all();
     })
 
-    .controller('FriendDetailCtrl', function ($scope, $stateParams, Friends) {
+    .controller('FriendDetailCtrl', function ($log, $scope, $stateParams, Friends) {
         $scope.friend = Friends.get($stateParams.friendId);
     })
 
-    .controller('AccountCtrl', function ($scope) {
-        $scope.settings = {
-            enableFriends: true
+    .controller('AccountCtrl', function ($log, $scope, $location) {
+        console.debug("AccountCtrl()");
+        $scope.settings = {enableFriends: true};
+        $scope.user = JSON.parse(localStorage.getItem("user"));
+
+        $scope.logout = function () {
+            $log.debug("logout()");
+            localStorage.removeItem("user");
+            $location.path("/login");
         };
+
     })
 
     .controller('MenuCtrl', function ($scope, $log, $stateParams, MenuService) {
@@ -56,7 +63,34 @@ angular.module('order.controllers', [])
                 console.error("Unable to find menus: " + error);
                 $scope.error = error;
             });
-        }
+        };
+
+        $scope.add = function (menu) {
+            $log.debug("add menu #{angular.toJson(@recommend, true)}");
+        };
+    })
+    .controller('LoginCtrl', function ($scope, $log, $stateParams, $location, LoginService) {
+        $scope.error = {};
+        $scope.user = {};
+        $scope.message = {};
+
+
+        $scope.login = function () {
+            $log.debug("login()");
+            return LoginService.login($scope.user).then((function (data) {
+                console.debug("login  ", data);
+                $scope.message = data;
+                localStorage.setItem("user", JSON.stringify(data.value));
+                if (data.message.code === '0101') {
+                    $location.path("/tab/dash");
+                }
+
+            }), function (error) {
+                console.error("Unable to login " + error);
+                $scope.message = error;
+            });
+        };
+
     })
 
 ;

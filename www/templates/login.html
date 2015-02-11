@@ -1,0 +1,40 @@
+<!--<ion-modal-view>-->
+<ion-view title="login" ng-controller="LoginCtrl">
+    <ion-header-bar align-title="center" class="bar bar-header  bar-myStyle ">
+        <a class="button icon-left  button-clear button-light ">取消</a>
+
+        <h1 class="title">用户登录</h1>
+    </ion-header-bar>
+    <ion-content>
+        <form name="loginForm" ng-submit="login()">
+
+            <div style="margin-top: 40px; ">
+                <div class="alert alert-info" ng-show="message.message.code !== 0101">
+                    <h4 class="alert-heading">{{ message.message.summary }}</h4>
+                    <span ng-bind="message.message.detail"></span>
+                </div>
+                <div class="loginItem login-area" style="">
+                    <label class="login-item-input">
+                        <i class="iphone-icon login-iphoneIcon-layout"></i>
+                        <input type="text" class="login-input-font item-input login-username-input"
+                               ng-model="user.username" placeholder="请输入11位手机号码" required>
+
+                    </label>
+                    <hr class="login-form-hr" color="#FFE3D1"/>
+                    <label class="login-item-input">
+                        <i class="lock-icon login-lockIcon-layout"></i>
+                        <input type="password" class="login-input-font item-input login-pwd-input"
+                               ng-model="user.password" placeholder="请输入密码" required>
+                    </label>
+                </div>
+
+            </div>
+            <div class="login-submitbtnDiv">
+                <label>
+                    <button class="button login-submitbtn" style="" type="submit" ng-disabled="loginForm.$invalid">登入</button>
+                </label>
+            </div>
+        </form>
+    </ion-content>
+</ion-view>
+

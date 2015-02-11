@@ -1,15 +1,25 @@
 <ion-view view-title="Account">
-  <ion-content>
-    <ion-list>
-      <ion-item class="item-toggle">
-        Enable Friends
-        <label class="toggle">
-          <input type="checkbox" ng-model="settings.enableFriends">
-          <div class="track">
-            <div class="handle"></div>
-          </div>
-        </label>
-      </ion-item>
-    </ion-list>
-  </ion-content>
+    <ion-content>
+        <ion-list>
+            <ion-item class="item-toggle">
+                Enable Friends
+                <label class="toggle">
+                    <input type="checkbox" ng-model="settings.enableFriends">
+
+                    <div class="track">
+                        <div class="handle"></div>
+                    </div>
+                </label>
+            </ion-item>
+            <ion-item class="item-remove-animate item-avatar item-icon-right">
+                <h3>{{user.username}}</h3>
+                <i class="icon ion-chevron-right icon-accessory"></i>
+
+                <ion-option-button class="button-assertive" ng-click="logout()">
+                    Logout
+                </ion-option-button>
+            </ion-item>
+
+        </ion-list>
+    </ion-content>
 </ion-view>
