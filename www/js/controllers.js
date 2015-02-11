@@ -47,7 +47,7 @@ angular.module('order.controllers', [])
         };
 
         $scope.findMenuDetail = function () {
-            $log.debug("findMenus()");
+            $log.debug("findMenuDetail()");
             return MenuService.findMenus({"filter": {"EQI_id": $stateParams.menuId }}).then((function (data) {
                 console.debug("Promise returned " + data.value.list.length + " menus");
                 $scope.menu = data.value.list[0];
